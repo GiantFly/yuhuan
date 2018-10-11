@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			#cont {
+				width: 1200px;
+				height: 800px;
+				margin: 0 auto;
+				background: #000;
+				position: relative;
+				overflow: hidden;
+			}
+			.fashetou {
+				width:3px;
+				height: 22px;
+				position: absolute;
+				border-radius:50% 50% 0 0;
+				background: #FFC107;
+				border: 7px solid;
+				border-bottom:#000 30px solid;
+				border-left-color:#FF0000;
+				border-right-color:#f00;
+				border-top-color:#FFC107 ;
+			}
+			
+			.smallfire {
+				/*width: 4px;
+				height: 4px;*/
+				position: absolute;
+
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="cont"></div>
+	</body>
+
+	<script type="text/javascript">
+		/*function Fire(_l, _t, _cont) {
+			this.X = _l;
+			this.Y = _t;
+			this.ocont = _cont;
+
+			this.createFire();
+		}
+		Fire.prototype.createFire = function() {
+			//			 创建烟花,设置初始位置‘
+			//			 开始运动
+			this.bigFire = document.createElement("div");
+			this.bigFire.className = "fashetou"
+			this.ocont.appendChild(this.bigFire);
+			this.bigFire.style.background = this.randomColor();
+			this.bigFire.style.left = this.X - this.bigFire.offsetWidth / 2 + "px";
+			this.bigFire.style.top = ocont.offsetHeight - this.bigFire.offsetHeight + "px"
+
+			this.fireMove();
+		}
+		Fire.prototype.fireMove = function() {
+			//			 运动到鼠标点击位置
+			//			 删除烟花,创建爆炸小烟花
+			var that = this;
+			move(this.bigFire, {
+				top: this.Y
+			}, function() {
+				that.bigFire.remove();
+				that.createSmall();
+			})
+		}
+		Fire.prototype.createSmall = function() {
+			//		   创建小烟花,设置初始位置
+			//		   开始运动
+			for(var i = 0; i < this.random(30, 80); i++) {
+				this.smallFire = document.createElement("div");
+				this.smallFire.className = "smallfire";
+				this.smallFire.style.background = this.randomColor();
+				this.smallFire.style.left = this.X + "px";
+				this.smallFire.style.top = this.Y + "px";
+				this.smallFire.setAttribute("yuhuan", i);
+
+				this.ocont.appendChild(this.smallFire)
+				this.smallMove()
+			}
+
+		}
+		Fire.prototype.smallMove = function() {
+			//		  运动到随机位置 
+			//		   删除烟花
+			var that = this;
+			move(this.smallFire, {
+					left: this.random(0, this.ocont.offsetWidth - this.smallFire.offsetWidth),
+					top: this.random(0, this.ocont.offsetHeight - this.smallFire.offsetHeight),
+				},
+				function() {
+					this.remove()
+				}.bind(this.smallFire)
+			)
+		}
+
+		Fire.prototype.randomColor = function() {
+			return "rgb(" + this.random(0, 255) + "," + this.random(0, 255) + "," + this.random(0, 255) + ")"
+
+		}
+		Fire.prototype.random = function(_a, _b) {
+			return Math.round(Math.random() * (_a - _b) + _b);
+		}
+
+		var ocont = document.querySelector("#cont");
+		ocont.onclick = function(eve) {
+			var e = eve || window.event
+			var fireLeft = e.clientX - ocont.offsetLeft;
+			var fireTop = e.clientY - ocont.offsetTop;
+
+			new Fire(fireLeft, fireTop, ocont);
+		}*/
+		
+		
+		
+		function Fire(s_l,s_t,o_cont){
+			this.X=s_l;
+			this.Y=s_t;
+			this.ocont=o_cont;
+			this.createFire()
+		}
+		Fire.prototype.createFire=function(){
+			 this.bigFire=document.createElement("div");
+			 this.bigFire.className="fashetou";
+//			 this.bigFire.style.background=this.randomColor();
+			 this.ocont.appendChild(this.bigFire);
+			 this.bigFire.style.left=this.X-this.bigFire.offsetWidth / 2+"px";
+			 this.bigFire.style.top=this.ocont.offsetHeight-this.bigFire.offsetHeight+"px";
+			 this.fireMove()
+		}
+		Fire.prototype.fireMove=function(){
+			var that=this;
+			move(this.bigFire,{top:this.Y},function(){
+				that.bigFire.remove();
+				that.createSmall();
+			})
+		}
+		Fire.prototype.createSmall=function(){
+			for (var i=0;i<this.random(30,51);i++) {
+				this.smallFire=document.createElement("div");
+				this.smallFire.className="smallfire"
+				this.smallFire.style.background=this.randomColor();
+				this.ocont.appendChild(this.smallFire);
+				this.smallFire.style.left=this.X-this.smallFire.offsetWidth/2+"px";
+				this.smallFire.style.top=this.Y+20+"px";
+				this.smallFire.style.width=this.random(2,10)+"px"
+				this.smallFire.style.height=this.smallFire.offsetWidth+"px";
+				this.smallFire.style.borderRadius=this.random(10,50)+"%";
+				this.smallMove();
+			}
+		}
+		Fire.prototype.smallMove=function(){
+			move(this.smallFire,{
+				left:this.random(0,this.ocont.offsetWidth-this.smallFire.offsetWidth),
+				top:this.random(0,this.ocont.offsetHeight-this.smallFire.offsetHeight),
+			},function(){
+				this.remove();
+			}.bind(this.smallFire))
+		}
+		Fire.prototype.randomColor=function(){
+			return "rgb("+this.random(0,255)+","+this.random(0,255)+","+this.random(0,255)+")"
+		}
+		Fire.prototype.random=function(_a,_b){
+			return Math.round(Math.random()*(_a-_b)+_b)
+		}
+		
+		
+		var ocont=document.querySelector("#cont");
+		
+		var timer=null;
+		var off=true;
+		ocont.onclick=function(eve){
+				var e=eve||window.event;
+				var s_left=e.clientX-ocont.offsetLeft;
+				var s_top=e.clientY-ocont.offsetTop;
+				
+				if (off) {
+					timer=setInterval(function(){new Fire(s_left,s_top,ocont)},400);
+					off=false;
+					
+				} else{
+					clearInterval(timer);
+					off=true;
+			
+				}
+					
+		}
+		
+			
+		
+
+
+		function move(ele,json,callback){
+	clearInterval(ele.timer);
+	ele.timer = setInterval(function(){
+		var onOff = true;
+		for(var attr in json){
+			var iNow = attr=="opacity" ? getStyle(ele,attr)*100 : parseInt(getStyle(ele,attr))
+			
+			var speed = (json[attr]-iNow)/6;
+			speed = speed<0 ? Math.floor(speed) : Math.ceil(speed);
+			
+			if(json[attr] != iNow){
+				onOff = false;
+			}
+			
+			if(attr == "opacity"){
+				ele.style.opacity = (iNow+speed)/100;
+				ele.style.filter = "alpha(opacity="+ (iNow+speed) +")";
+			}else{
+				ele.style[attr] = iNow+speed + "px";
+			}
+		}
+		if(onOff){
+			clearInterval(ele.timer);
+			if(callback) callback();
+		}
+	},30)
+}
+
+function getStyle(ele,attr){
+	if(ele.currentStyle){
+		return ele.currentStyle[attr]
+	}else{
+		return getComputedStyle(ele,false)[attr];
+	}
+}
+		
+	</script>
+
+</html>
